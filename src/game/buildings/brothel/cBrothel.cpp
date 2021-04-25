@@ -366,7 +366,7 @@ bool sBrothel::runaway_check(sGirl& girl)
     {
         if (g_Dice.percent(g_Game->job_manager().guard_coverage() - girl.m_DaysUnhappy)) return false;
 
-        girl.m_Events.AddMessage("She ran away.", IMGTYPE_PROFILE, EVENT_DANGER);
+        girl.AddMessage("She ran away.", IMGTYPE_PROFILE, EVENT_DANGER);
         girl.set_stat(STAT_TIREDNESS, 0);
         girl.set_stat(STAT_HEALTH, 100);
         girl.m_RunAway = 6;
@@ -437,7 +437,7 @@ bool sBrothel::runaway_check(sGirl& girl)
     */
     std::stringstream ss;
     ss << "This girl's unhappiness has turned her into " << (drug == "Alcoholic" ? "an" : "a") << " " << drug << ".";
-    girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+    girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
     return false;
 }
 
@@ -728,7 +728,7 @@ void do_food_and_digs(IBuilding& brothel, sGirl& girl)
         ss << girl.FullName() << " has started to view the world from a more \"Pessimistic\" point of view.";
     }
 
-    if (ss.str().length() > 0)    girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
+    if (ss.str().length() > 0)    girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
 }
 
 // ----- Stats

@@ -538,7 +538,7 @@ bool cMissionRecapture::execute_mission(sGang& gang, std::stringstream& event_te
     gang.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, gangeventtype);
     if (captured)
     {
-        runaway->m_Events.AddMessage(RGmsg.str(), girlimagetype, EVENT_GANG);
+        runaway->AddMessage(RGmsg.str(), girlimagetype, EVENT_GANG);
         runaway->m_RunAway = 0;
         g_Game->RemoveGirlFromRunaways(runaway.get());
         g_Game->dungeon().AddGirl(runaway, DUNGEON_GIRLRUNAWAY);
@@ -753,7 +753,7 @@ bool cMissionPettyTheft::execute_mission(sGang& gang, std::stringstream& ss)
             auto report = std::make_shared<CombatReport>();
             report->rounds = combat.round_summaries();
             gang.m_Events.AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
-            girl->m_Events.AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
+            girl->GetEvents().AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
 
 
             // if the girl has lost
@@ -992,7 +992,7 @@ bool cMissionCatacombs::execute_mission(sGang& gang, std::stringstream& ss)
                     std::stringstream NGmsg;
                     ugirl->add_temporary_trait("Kidnapped", 2 + g_Dice % 10);
                     NGmsg << ugirl->FullName() << " was captured in the catacombs by " << gang.name() << ".";
-                    ugirl->m_Events.AddMessage(NGmsg.str(), IMGTYPE_PROFILE, EVENT_GANG);
+                    ugirl->AddMessage(NGmsg.str(), IMGTYPE_PROFILE, EVENT_GANG);
                     g_Game->dungeon().AddGirl(ugirl, DUNGEON_GIRLCAPTURED);
                 }
                 else
@@ -1004,7 +1004,7 @@ bool cMissionCatacombs::execute_mission(sGang& gang, std::stringstream& ss)
                         std::stringstream NGmsg;
                         ugirl->add_temporary_trait("Kidnapped", 2 + g_Dice % 10);
                         NGmsg << ugirl->FullName() << " was captured in the catacombs by " << gang.name() << ".";
-                        ugirl->m_Events.AddMessage(NGmsg.str(), IMGTYPE_PROFILE, EVENT_GANG);
+                        ugirl->AddMessage(NGmsg.str(), IMGTYPE_PROFILE, EVENT_GANG);
                         g_Game->dungeon().AddGirl(ugirl, DUNGEON_GIRLCAPTURED);
                     }
                 }
@@ -1143,7 +1143,7 @@ bool cMissionService::execute_mission(sGang& gang, std::stringstream& ss)
                         else/*                        */    gss << item->m_Name;
                         gss << " and claimed it for herself.";
                     }
-                    girl->m_Events.AddMessage(gss.str(), IMGTYPE_PROFILE, EVENT_GANG);
+                    girl->AddMessage(gss.str(), IMGTYPE_PROFILE, EVENT_GANG);
                     beasts--;
                     ss << "\n" << gss.str() << "\n";
                 }

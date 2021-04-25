@@ -36,34 +36,24 @@ std::string CEvent::TitleText() const
     {
     case EVENT_DAYSHIFT:
         return "Day Shift";
-        break;
     case EVENT_NIGHTSHIFT:
         return "Night Shift";
-        break;
     case EVENT_WARNING:
         return "Warning";
-        break;
     case EVENT_DANGER:
         return "!!!DANGER!!!";
-        break;
     case EVENT_GOODNEWS:
         return "!!!GOODNEWS!!!";
-        break;
     case EVENT_LEVELUP:
         return "!!!LEVEL UP!!!";
-        break;
     case EVENT_SUMMARY:
         return "Summary";
-        break;
     case EVENT_DUNGEON:
         return "Dungeon";
-        break;
     case EVENT_MATRON:
         return "Matron";
-        break;
     case EVENT_GANG:
         return "Gang Report";
-        break;
     //case EVENT_BROTHEL:
     //    return "Event";
     //    break;
@@ -75,10 +65,8 @@ std::string CEvent::TitleText() const
         break;
     case EVENT_DEBUG:
         return "#DEBUG#";
-        break;
     default:
         return "Event";
-        break;
     }
 }
 
@@ -153,39 +141,23 @@ void cEvents::Clear()
 
 bool cEvents::HasGoodNews() const
 {
-    for(auto& event : events) {
-        if(event.IsGoodNews())
-            return true;
-    }
-    return false;
+    return std::any_of(begin(events), end(events), [](auto&& event){ return event.IsGoodNews(); });
 }
 
 
 bool cEvents::HasUrgent() const
 {
-    for(auto& event : events) {
-        if(event.IsUrgent())
-            return true;
-    }
-    return false;
+    return std::any_of(begin(events), end(events), [](auto&& event){ return event.IsUrgent(); });
 }
 
 bool cEvents::HasDanger() const
 {
-    for(auto& event : events) {
-        if(event.IsDanger())
-            return true;
-    }
-    return false;
+    return std::any_of(begin(events), end(events), [](auto&& event){ return event.IsDanger(); });
 }
 
 bool cEvents::HasWarning() const
 {
-    for(auto& event : events) {
-        if(event.IsWarning())
-            return true;
-    }
-    return false;
+    return std::any_of(begin(events), end(events), [](auto&& event){ return event.IsWarning(); });
 }
 
 bool CEvent::IsCombat() const {
@@ -193,9 +165,9 @@ bool CEvent::IsCombat() const {
 }
 
 
-void cEvents::AddMessage(std::string message, int nImgType, EventType event_type)
+void cEvents::AddMessage(std::string message, std::string image_type, EventType event_type)
 {
-    events.emplace_back(event_type, nImgType, std::move(message), nullptr);
+    events.emplace_back(event_type, std::move(image_type), std::move(message), nullptr);
     m_bSorted = false;
 }
 
@@ -220,8 +192,8 @@ bool CEvent::CmpEventPredicate(const CEvent& eFirst, const CEvent& eSecond)
     return make_sort_tuple(eFirst) < make_sort_tuple(eSecond);
 }
 
-CEvent::CEvent(EventType event, unsigned char type, std::string message, std::shared_ptr<CombatReport> rep) :
-    m_Event(event), m_MessageType(type), m_Message(std::move(message)), m_Report(std::move(rep))
+CEvent::CEvent(EventType event, std::string image, std::string message, std::shared_ptr<CombatReport> rep) :
+    m_Event(event), m_ImageType(std::move(image)), m_Message(std::move(message)), m_Report(std::move(rep))
 {
 }
 

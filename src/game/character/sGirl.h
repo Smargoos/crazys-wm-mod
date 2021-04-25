@@ -159,8 +159,11 @@ struct sGirl : public ICharacter, public std::enable_shared_from_this<sGirl>
 
     std::set<Fetishs> m_FetishTypes;            // the types of fetishes this girl has
 
-    void AddMessage(std::string message, int nImgType, EventType event);
-    cEvents m_Events;                            // Each girl keeps track of all her events that happened to her in the last turn
+    // even handling
+    void AddMessage(const std::string& message, std::string image_type, EventType event);
+    cEvents& GetEvents();
+    const cEvents& GetEvents() const;
+    void ClearEvents();
 
     // triggers
     scripting::pEventMapping m_EventMapping;
@@ -298,6 +301,8 @@ private:
     int m_States = 0;                                // Holds the states the girl has
 
     DirPath m_ImageFolder;
+
+    cEvents m_Events;                            // Each girl keeps track of all her events that happened to her in the last turn
 };
 
 #endif //CRAZYS_WM_MOD_SGIRL_HPP

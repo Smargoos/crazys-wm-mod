@@ -22,6 +22,7 @@
 #include "cGirls.h"
 #include "buildings/IBuilding.h"
 #include "utils/streaming_random_selection.hpp"
+#include "images/types.h"
 
 extern const char* const TrainingInteractionId;
 
@@ -80,7 +81,7 @@ sWorkJobResult MistressJob::DoWork(sGirl& girl, bool is_night) {
         }
     }
 
-    girl.AddMessage(ss.str(), IMGTYPE_TEACHER, is_night ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
+    girl.AddMessage(ss.str(), image_types::work::MISTRESS, is_night ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
     return {false, 0, 0, 100};
 }
 
@@ -255,7 +256,7 @@ IGenericJob::eCheckWorkResult PracticeJob::CheckWork(sGirl& girl, bool is_night)
             girl.AddMessage(ss.str(), IMGTYPE_TORTURE, EVENT_NOWORK);
         } else {
             add_text("refuse");
-            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         }
 
         return eCheckWorkResult::REFUSES;

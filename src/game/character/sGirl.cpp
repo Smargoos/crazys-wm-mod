@@ -361,7 +361,7 @@ bool sGirl::calc_pregnancy(int chance, int type, const ICharacter& father)
         break;
     }
 
-    m_Events.AddMessage(text, IMGTYPE_PREGNANT, EVENT_DANGER);
+    AddMessage(text, IMGTYPE_PREGNANT, EVENT_DANGER);
     create_pregnancy(*this, 1, type, father);
     return false;
 }
@@ -1443,14 +1443,14 @@ double sGirl::job_performance(JOBS job, bool estimate) const {
     return job_handler->GetPerformance(*this, estimate);
 }
 
-void sGirl::AddMessage(std::string message, int nImgType, EventType event) {
+void sGirl::AddMessage(const std::string& message, std::string image_type, EventType event) {
     m_Events.AddMessage(interpolate_string(message,
                                            [this](const std::string& pattern) -> std::string {
         if(pattern == "name") {
             return this->FullName();
         }
         throw std::runtime_error("Invalid pattern " + pattern);
-        }, g_Dice), nImgType, event);
+        }, g_Dice), std::move(image_type), event);
 }
 
 const DirPath& sGirl::GetImageFolder() const {
@@ -1472,4 +1472,16 @@ FormattedCellData sGirl::GetJobRating(JOBS job) const {
     else if (value >= 70)    return {1, "D"};             // Don't bother
     else                     return {0, "E"};  // Expect Failure
 
+}
+
+void sGirl::ClearEvents() {
+    m_Events.Clear();
+}
+
+cEvents& sGirl::GetEvents() {
+    return m_Events;
+}
+
+const cEvents& sGirl::GetEvents() const {
+    return m_Events;
 }

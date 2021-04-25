@@ -145,8 +145,8 @@ EFightResult GirlFightsGirl(sGirl& a, sGirl& b) {
     auto result = combat.run(10);
     auto report = std::make_shared<CombatReport>();
     report->rounds = combat.round_summaries();
-    a.m_Events.AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
-    b.m_Events.AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
+    a.GetEvents().AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
+    b.GetEvents().AddMessage(combat.round_summaries().back(), EVENT_GANG, report);
 
     switch(result) {
         case ECombatResult::VICTORY:

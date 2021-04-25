@@ -1,0 +1,29 @@
+<Substitutions>
+    <!-- Using Free girl images for Slave girls -->
+    <Substitute Cost="100">
+        <Primary>*</Primary>
+        <Secondary Tag="slave" Value="yes"/>
+        <NewSecondary Tag="slave" Value="no" />
+    </Substitute>
+
+    <!-- Using Slave girl images for Free girls -->
+    <Substitute Cost="250">
+        <Primary>*</Primary>
+        <Secondary Tag="slave" Value="no"/>
+        <NewSecondary Tag="slave" Value="yes" />
+    </Substitute>
+
+    <!-- Using pregnant images for non-pregnant girls -->
+    <Substitute Cost="500">
+        <Primary>*</Primary>
+        <Secondary Tag="pregnant" Value="no"/>
+        <NewSecondary Tag="pregnant" Value="yes" />
+    </Substitute>
+
+    <!-- Using non-pregnant images for pregnant girls -->
+    <Substitute Cost="250">
+        <Primary>*</Primary>
+        <Secondary Tag="pregnant" Value="yes"/>
+        <NewSecondary Tag="pregnant" Value="no" />
+    </Substitute>
+</Substitutions>
