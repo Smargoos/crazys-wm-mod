@@ -30,6 +30,7 @@
 #include "scripting/fwd.hpp"
 #include "interface/constants.h"
 #include "IKeyValueStore.h"
+#include "images/types.h"
 
 class sGirl;
 class cGirls;

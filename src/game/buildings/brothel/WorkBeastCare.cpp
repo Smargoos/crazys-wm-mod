@@ -37,7 +37,7 @@ sWorkJobResult WorkBeastCare(sGirl& girl, bool Day0Night1, cRng& rng)
     if (roll_a < 50 && girl.disobey_check(actiontype, JOB_BEASTCARER))
     {
         ss << "${name} refused to take care of beasts during the " << (Day0Night1 ? "night" : "day") << " shift.";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} worked taking care of beasts.\n \n";
@@ -51,7 +51,7 @@ sWorkJobResult WorkBeastCare(sGirl& girl, bool Day0Night1, cRng& rng)
 
     int wages = 20, tips = 0;
     int enjoy = 0;
-    int imagetype = IMGTYPE_FARM;
+    auto imagetype = image_types::work::BEAST_CARE;
     auto msgtype = Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT;
 
 

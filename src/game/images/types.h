@@ -1,14 +1,21 @@
 #ifndef WM_TYPES_H
 #define WM_TYPES_H
 
+#include "Constants.h"
+
 namespace image_types {
     constexpr const char* PROFILE = "profile";
     constexpr const char* FORMAL  = "formal";
 
     namespace work {
-        constexpr const char* REFUSE     = "work:refuse";
+        constexpr const char* REFUSE       = "work:refuse";
+        constexpr const char* IMPOSSIBLE   = "work:impossible";
+        constexpr const char* DOES_NOTHING = "work:nothing";
+        constexpr const char* BACK_TO_WORK = "work:back-to-work";
+        constexpr const char* MATRON_MSG   = "work:matron-msg";
+        constexpr const char* MATRON_WARN  = "work:matron-warn";
 
-        constexpr const char* MAID   = "work:maid";
+        constexpr const char* MAID       = "work:maid";
 
         constexpr const char* WAITRESS   = "work:waitress";
         constexpr const char* BARMAID    = "work:barmaid";
@@ -57,11 +64,10 @@ namespace image_types {
         constexpr const char* BEASTCAPT  = "work:beast-capture";
         constexpr const char* RESEARCH   = "work:research";
         constexpr const char* FARMHAND   = "work:farmhand";
-        constexpr const char* BEAST_CARE = "work:beast-care";
+        constexpr const char* BEAST_CARE = "work:beast-care";       // -> FARM
 
         constexpr const char* NO_CREW    = "work:no-crew";
         constexpr const char* CREW_REFUSE = "work:crew-refuse";
-        constexpr const char* DIRECTOR   = "work:director";
         constexpr const char* FILMCHEF   = "work:film-chef";
         constexpr const char* FILMTITTY  = "work:film-titty";
         constexpr const char* FILMSTRIP  = "work:film-strip";
@@ -82,11 +88,13 @@ namespace image_types {
         constexpr const char* FILMACTION = "work:film-action";
         constexpr const char* FILMMUSIC  = "work:film-music";
 
+        constexpr const char* DIRECTOR   = "work:director";
         constexpr const char* CAMMAGE    = "work:camera-mage";
         constexpr const char* CRYSTAL    = "work:crystal-purifier";
         constexpr const char* PROMOTER   = "work:promoter";
         constexpr const char* STAGEHAND  = "work:stagehand";
-        constexpr const char* FLUFFER    = "work:fluffer";
+        constexpr const char* FLUFFER    = "work:fluffer";      // -> ORAL
+        constexpr const char* FILM_CREW  = "work:film-crew";
 
         constexpr const char* MATRON     = "work:matron";
 
@@ -127,9 +135,12 @@ namespace image_types {
         constexpr const char* PONY     = "training:pony";
         constexpr const char* CAT      = "training:cat";
         constexpr const char* SOLO     = "training:solo";
+        constexpr const char* FORCED   = "training:forced";
     }
 
     namespace sex {
+        constexpr const char* ANY     = "sex:lesbian:*";
+
         constexpr const char* LESBIAN     = "sex:lesbian:*";
         constexpr const char* EATOUT      = "sex:lesbian:eatout";
 
@@ -207,14 +218,44 @@ namespace image_types {
     constexpr const char* CAPTURE_HER  = "captured";
     constexpr const char* SLAVE_MARKET = "slave-market";
     constexpr const char* JAIL         = "jail";
+    constexpr const char* DUNGEON      = "dungeon";
+    constexpr const char* ASK_FAVOUR   = "ask-favour";
 
     constexpr const char* DEATH        = "death";
     constexpr const char* TORTURE      = "torture";
     constexpr const char* RUNAWAY      = "runaway";
     constexpr const char* BIRTH        = "birth";
     constexpr const char* SICK         = "sick";
+    constexpr const char* ADDICTION    = "addiction";
 
     constexpr const char* LEVEL_UP     = "level-up";
+    constexpr const char* GOOD_NEWS    = "good-news";
+
+    // For now, all building events just use this message
+    constexpr const char* BUILDING     = "building";
+
+    const char* skill_to_img(SKILLS skill) {
+        switch(skill) {
+            case SKILL_LESBIAN:
+                return image_types::sex::LESBIAN;
+            case SKILL_ANAL:
+                return image_types::sex::ANAL;
+            case SKILL_ORALSEX:
+                return image_types::sex::ORAL;
+            case SKILL_TITTYSEX:
+                return image_types::sex::TITTY;
+            case SKILL_HANDJOB:
+                return image_types::sex::HAND;
+            case SKILL_FOOTJOB:
+                return image_types::sex::FOOT;
+            case SKILL_NORMALSEX:
+                return image_types::sex::VANILLA_ALL;
+            case SKILL_BEASTIALITY:
+                return image_types::sex::BEAST;
+            case SKILL_GROUP:
+                return image_types::sex::GROUP_ALL;
+        }
+    }
 }
 
 #endif //WM_TYPES_H

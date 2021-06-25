@@ -41,7 +41,7 @@ sWorkJobResult WorkBrothelStripper(sGirl& girl, bool Day0Night1, cRng& rng)
     {
         //SIN - More informative mssg to show *what* she refuses
         ss << "${name} refused to strip for customers in your brothel " << (Day0Night1 ? "tonight." : "today.");
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} was stripping in the brothel.\n";
@@ -50,7 +50,7 @@ sWorkJobResult WorkBrothelStripper(sGirl& girl, bool Day0Night1, cRng& rng)
 
     int wages = 45, tips = 0;
     int enjoy = 0, fame = 0;
-    int imagetype = IMGTYPE_STRIP;
+    auto imagetype = image_types::sex::STRIP;
 
 #pragma endregion
 #pragma region //    Job Performance            //
@@ -304,7 +304,7 @@ sWorkJobResult WorkBrothelStripper(sGirl& girl, bool Day0Night1, cRng& rng)
         if (girl.has_active_trait("Shroud Addict"))            girl.add_item(g_Game->inventory_manager().GetItem("Shroud Mushroom"));
         if (girl.has_active_trait("Fairy Dust Addict"))        girl.add_item(g_Game->inventory_manager().GetItem("Fairy Dust"));
         if (girl.has_active_trait("Viras Blood Addict"))    girl.add_item(g_Game->inventory_manager().GetItem("Vira Blood"));
-        girl.AddMessage(warning, IMGTYPE_ORAL, EVENT_WARNING);
+        girl.AddMessage(warning, image_types::sex::BLOW_FOR_DRUGS, EVENT_WARNING);
     }
 
     if (sex)
@@ -331,13 +331,14 @@ sWorkJobResult WorkBrothelStripper(sGirl& girl, bool Day0Night1, cRng& rng)
             }
             ss << ", making him very happy.\n";
         }
-        /* */if (n == SKILL_LESBIAN)    imagetype = IMGTYPE_LESBIAN;
-        else if (n == SKILL_ORALSEX)    imagetype = IMGTYPE_ORAL;
-        else if (n == SKILL_TITTYSEX)    imagetype = IMGTYPE_TITTY;
-        else if (n == SKILL_HANDJOB)    imagetype = IMGTYPE_HAND;
-        else if (n == SKILL_FOOTJOB)    imagetype = IMGTYPE_FOOT;
-        else if (n == SKILL_ANAL)        imagetype = IMGTYPE_ANAL;
-        else if (n == SKILL_NORMALSEX)    imagetype = IMGTYPE_SEX;
+        // TODO this pattern exists in multiple jobs, unify!
+        /* */if (n == SKILL_LESBIAN)    imagetype = image_types::sex::LESBIAN;
+        else if (n == SKILL_ORALSEX)    imagetype = image_types::sex::ORAL;
+        else if (n == SKILL_TITTYSEX)    imagetype = image_types::sex::TITTY;
+        else if (n == SKILL_HANDJOB)    imagetype = image_types::sex::HAND;
+        else if (n == SKILL_FOOTJOB)    imagetype = image_types::sex::FOOT;
+        else if (n == SKILL_ANAL)        imagetype = image_types::sex::ANAL;
+        else if (n == SKILL_NORMALSEX)    imagetype = image_types::sex::VANILLA_ALL;
         if (n == SKILL_NORMALSEX)
         {
             if (girl.lose_trait("Virgin"))
@@ -369,7 +370,7 @@ sWorkJobResult WorkBrothelStripper(sGirl& girl, bool Day0Night1, cRng& rng)
         roll_max /= 4;
         wages += 50 + rng%roll_max;
         fame += 1;
-        imagetype = IMGTYPE_MAST;
+        imagetype = image_types::sex::MASTURBATE;
         //girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAST, Day0Night1);
     }
     else

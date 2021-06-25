@@ -16,15 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma region //    Includes and Externs            //
 #include "buildings/cBuildingManager.h"
 #include "cRng.h"
 #include "IGame.h"
 #include "cGirls.h"
 #include <sstream>
 #include "cJobManager.h"
-
-#pragma endregion
 
 // `J` Job Brothel - General
 sWorkJobResult WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
@@ -37,7 +34,7 @@ sWorkJobResult WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
     if (girl.disobey_check(actiontype, JOB_ADVERTISING))
     {
         ss << "${name} refused to advertise the brothel today.";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} is assigned to advertise the brothel.\n \n";
@@ -46,7 +43,6 @@ sWorkJobResult WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
 
     int wages = 20, tips = 0;
     int enjoy = 0, fame = 0;
-    int imagetype = IMGTYPE_SIGN;
     auto msgtype = EVENT_SUMMARY;
 
 #pragma endregion
@@ -127,7 +123,7 @@ sWorkJobResult WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
         if (saysomething > 50)
         {
             girl.AddMessage("${name} comes up to you and asks you to change her job, She does not like advertizing.\n",
-                            IMGTYPE_PROFILE, EVENT_WARNING);
+                            image_types::ASK_FAVOUR, EVENT_WARNING);
         }
         else if (saysomething > 25)
         {
@@ -154,7 +150,7 @@ sWorkJobResult WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma endregion
 #pragma region    //    Finish the shift            //
 
-    girl.AddMessage(ss.str(), imagetype, msgtype);
+    girl.AddMessage(ss.str(), image_types::work::ADVERTISING, msgtype);
 
     // now to boost the brothel's advertising level accordingly
     brothel->m_AdvertisingLevel += (multiplier / 100);

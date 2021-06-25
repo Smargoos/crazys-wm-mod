@@ -68,13 +68,13 @@ cCrewJob::eCheckWorkResult cCrewJob::CheckWork(sGirl& girl, bool is_night) {
     if (brothel->num_girls_on_job(JOB_CAMERAMAGE, SHIFT_NIGHT) == 0 || brothel->num_girls_on_job(JOB_CRYSTALPURIFIER, SHIFT_NIGHT) == 0)
     {
         add_text("no-crew");
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::NO_CREW, EVENT_NOWORK);
         return eCheckWorkResult::IMPOSSIBLE;    // not refusing
     }
     else if (GetNumberActresses(*brothel) < 1)
     {
         add_text("no-actress");
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::NO_CREW, EVENT_NOWORK);
         return eCheckWorkResult::IMPOSSIBLE;    // not refusing
     }
 
@@ -138,7 +138,7 @@ sWorkJobResult cCrewJob::DoWork(sGirl& girl, bool is_night) {
 
 cJobCameraMage::cJobCameraMage() : cCrewJob(JOB_CAMERAMAGE, "CameraMage.xml") {
     m_Info.Provides.emplace_back(CamMageInteractionId);
-    m_EventImage = IMGTYPE_CAMERA_MAGE;
+    m_EventImage = image_types::work::CAMMAGE;
 }
 
 cJobCrystalPurifier::cJobCrystalPurifier() : cCrewJob(JOB_CRYSTALPURIFIER, "CrystalPurifier.xml") {
@@ -147,7 +147,7 @@ cJobCrystalPurifier::cJobCrystalPurifier() : cCrewJob(JOB_CRYSTALPURIFIER, "Crys
 
 cJobFluffer::cJobFluffer() : cCrewJob(JOB_FLUFFER, "Fluffer.xml") {
     m_Info.Provides.emplace_back(FluffPointsId);
-    m_EventImage = IMGTYPE_ORAL;
+    m_EventImage = image_types::work::FLUFFER;
 }
 
 void cJobFluffer::HandleUpdate(sGirl& girl, float performance) {
@@ -156,7 +156,7 @@ void cJobFluffer::HandleUpdate(sGirl& girl, float performance) {
 
 cJobDirector::cJobDirector() : cCrewJob(JOB_DIRECTOR, "Director.xml") {
     m_Info.Provides.emplace_back(DirectorInteractionId);
-    m_EventImage = IMGTYPE_DIRECTOR;
+    m_EventImage = image_types::work::DIRECTOR;
 }
 
 class cJobStageHand : public cBasicJob {
@@ -174,7 +174,7 @@ IGenericJob::eCheckWorkResult cJobStageHand::CheckWork(sGirl& girl, bool is_nigh
     if (roll_a <= 50 && (girl.disobey_check(ACTION_MOVIECREW, JOB_STAGEHAND) || girl.disobey_check(ACTION_WORKCLEANING, JOB_STAGEHAND)))
     {
         ss << "${name} refused to work as a stagehand today.";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return eCheckWorkResult::REFUSES;
     }
     return eCheckWorkResult::ACCEPTS;
@@ -188,7 +188,7 @@ sWorkJobResult cJobStageHand::DoWork(sGirl& girl, bool is_night) {
     cGirls::UnequipCombat(girl);    // not for studio crew
     int enjoyc = 0, enjoym = 0;
     m_Wages = 50;
-    int imagetype = IMGTYPE_STAGEHAND;
+    auto imagetype = image_types::work::STAGEHAND;
     bool filming = true;
 
 
@@ -204,7 +204,6 @@ sWorkJobResult cJobStageHand::DoWork(sGirl& girl, bool is_night) {
     {
         ss << "There were no scenes being filmed, so she just cleaned the set.\n \n";
         filming = false;
-        imagetype = IMGTYPE_MAID;
     }
 
     if (roll_a <= 10)

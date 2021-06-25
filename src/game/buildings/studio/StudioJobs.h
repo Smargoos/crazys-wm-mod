@@ -22,6 +22,7 @@
 
 #include "jobs/BasicJob.h"
 #include "data.h"
+#include "images/types.h"
 
 struct sFilmPleasureData {
     int Factor = 0;                             // Determines the influence of libido
@@ -108,7 +109,7 @@ public:
     sWorkJobResult DoWork(sGirl& girl, bool is_night) override;
     using cBasicJob::cBasicJob;
 protected:
-    Image_Types m_EventImage = IMGTYPE_STUDIO_CREW;
+    const char* m_EventImage = image_types::work::FILM_CREW;
 private:
     virtual void HandleUpdate(sGirl& girl, float performance) = 0;
 };

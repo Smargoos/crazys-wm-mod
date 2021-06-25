@@ -40,7 +40,7 @@ sWorkJobResult WorkBrothelMasseuse(sGirl& girl, bool Day0Night1, cRng& rng)
     {
         //SIN - More informative mssg to show *what* she refuses
         ss << "${name} refused to massage customers in your brothel " << (Day0Night1 ? "tonight." : "today.");
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} worked massaging customers.\n \n";
@@ -50,7 +50,7 @@ sWorkJobResult WorkBrothelMasseuse(sGirl& girl, bool Day0Night1, cRng& rng)
     int wages = girl.askprice() + 40;
     int tips = 0;
     int work = 0, fame = 0;
-    int imageType = IMGTYPE_MASSAGE;
+    auto imageType = image_types::work::MASSEUSE;
 
 #pragma endregion
 #pragma region //    Job Performance            //
@@ -263,13 +263,13 @@ sWorkJobResult WorkBrothelMasseuse(sGirl& girl, bool Day0Night1, cRng& rng)
             }
             ss << ", making him very happy.\n";
         }
-        /* */if (n == SKILL_LESBIAN)    imageType = IMGTYPE_LESBIAN;
-        else if (n == SKILL_ORALSEX)    imageType = IMGTYPE_ORAL;
-        else if (n == SKILL_TITTYSEX)    imageType = IMGTYPE_TITTY;
-        else if (n == SKILL_HANDJOB)    imageType = IMGTYPE_HAND;
-        else if (n == SKILL_FOOTJOB)    imageType = IMGTYPE_FOOT;
-        else if (n == SKILL_ANAL)        imageType = IMGTYPE_ANAL;
-        else if (n == SKILL_NORMALSEX)    imageType = IMGTYPE_SEX;
+        /* */if (n == SKILL_LESBIAN)    imageType = image_types::sex::LESBIAN;
+        else if (n == SKILL_ORALSEX)    imageType = image_types::sex::ORAL;
+        else if (n == SKILL_TITTYSEX)    imageType = image_types::sex::TITTY;
+        else if (n == SKILL_HANDJOB)    imageType = image_types::sex::HAND;
+        else if (n == SKILL_FOOTJOB)    imageType = image_types::sex::FOOT;
+        else if (n == SKILL_ANAL)        imageType = image_types::sex::ANAL;
+        else if (n == SKILL_NORMALSEX)    imageType = image_types::sex::VANILLA_ALL;
         if (n == SKILL_NORMALSEX)
         {
             if (girl.lose_trait("Virgin"))

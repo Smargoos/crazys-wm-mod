@@ -31,6 +31,7 @@
 #include "scripting/GameEvents.h"
 #include "cGirls.h"
 #include "manager.h"
+#include "images/types.h"
 
 extern const char* const FluffPointsId = "FluffPoints";
 extern const char* const StageHandPtsId = "StageHandPoints";
@@ -95,7 +96,7 @@ void sMovieStudio::UpdateGirls(bool is_night)
             if (girl.m_NightJob == JOB_STAGEHAND) { // these two can still work
                 g_Game->job_manager().handle_simple_job(girl, SHIFT_NIGHT);
             } else {
-                girl.AddMessage("There was no crew to film the scene, so ${name} took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
+                girl.AddMessage("There was no crew to film the scene, so ${name} took the day off", image_types::work::NO_CREW, EVENT_NOWORK);
             }
         });
     } else {
@@ -138,7 +139,7 @@ void sMovieStudio::UpdateGirls(bool is_night)
 
     EndShift(is_night);
 
-    m_Events.AddMessage(summary.str(), IMGTYPE_PROFILE, EVENT_SUMMARY);
+    m_Events.AddMessage(summary.str(), image_types::BUILDING, EVENT_SUMMARY);
 }
 
 void sMovieStudio::auto_assign_job(sGirl& target, std::stringstream& message, bool is_night)

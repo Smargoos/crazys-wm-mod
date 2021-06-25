@@ -21,6 +21,7 @@
 #include "IBuilding.h"
 #include "buildings/cBuildingManager.h"
 #include "interface/constants.h"
+#include "images/types.h"
 
 #include "cDungeon.h"
 #include "cGangs.h"
@@ -494,15 +495,15 @@ void cDungeon::Update()
             OnGirlDead(current);
 
             msg.str(""); ss.str("");
-            girl->AddMessage("${name} has died in the dungeon.", IMGTYPE_DEATH, EVENT_DANGER);
-            girl->AddMessage("${name} has died.  Her body will be removed by the end of the week.\n", IMGTYPE_DEATH, EVENT_SUMMARY);
+            girl->AddMessage("${name} has died in the dungeon.", image_types::DEATH, EVENT_DANGER);
+            girl->AddMessage("${name} has died.  Her body will be removed by the end of the week.\n", image_types::DEATH, EVENT_SUMMARY);
 
             // if there is a torturer send her a message
             if (m_TortureDone)
             {
                 msg.str("");
                 msg << girlName << " has died in the dungeon under her care!";
-                TorturerGirlref->AddMessage(msg.str(), IMGTYPE_PROFILE, EVENT_DUNGEON);
+                TorturerGirlref->AddMessage(msg.str(), image_types::work::TORTURER, EVENT_DUNGEON);
             }
 
             continue;
@@ -521,7 +522,7 @@ void cDungeon::Update()
         msg.str(""); ss.str("");
         msg << girlName << " is languishing in the dungeon.\n \n";
         EventType msgtype = EVENT_DUNGEON;
-        int imgtype = IMGTYPE_JAIL;
+        const char* imgtype = image_types::DUNGEON;
         int    nHealth = girl->health();
         int    nTired = girl->tiredness();
 
@@ -543,7 +544,7 @@ void cDungeon::Update()
             if (girl->m_Tort)
             {
                 msg << " was tortured this week.";
-                imgtype = IMGTYPE_TORTURE;
+                imgtype = image_types::TORTURE;
                 if (nHealth < 40 || nTired > 60)    { msg << "\nShe"; }
             }
             if (nHealth < 20)                        { msg << " is severely injured"; }
@@ -568,7 +569,7 @@ void cDungeon::Update()
     {
         msg.str("");
         msg << TorturerGirlref->FullName() << " has tortured " << m_NumGirlsTort << " girls in the Dungeon.";
-        TorturerGirlref->AddMessage(msg.str(), IMGTYPE_DOM, EVENT_DUNGEON);
+        TorturerGirlref->AddMessage(msg.str(), image_types::work::TORTURER, EVENT_DUNGEON);
     }
 
 
