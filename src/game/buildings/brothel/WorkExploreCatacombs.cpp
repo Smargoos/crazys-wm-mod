@@ -46,7 +46,7 @@ sWorkJobResult WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
     if (girl.disobey_check(actiontype, JOB_EXPLORECATACOMBS))
     {
         ss << "${name} refused to go into the catacombs during the " << (Day0Night1 ? "night" : "day") << " shift.";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} went into the catacombs to see what she can find.\n \n";

@@ -133,7 +133,7 @@ void SurgeryJob::ReceiveTreatment(sGirl& girl, bool is_night) {
             if(girl.strength() > 50) {
                 girl.strength(-uniform(0, 2));
             }
-            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, msgtype);
+            girl.AddMessage(ss.str(), image_types::treatments::IMP_HEALTH, msgtype);
             return;
         }
 
@@ -185,13 +185,13 @@ IGenericJob::eCheckWorkResult SurgeryJob::CheckWork(sGirl& girl, bool is_night) 
         girl.FullJobReset(JOB_RESTING);
         girl.m_WorkingDay = girl.m_PrevWorkingDay = 0;
         ss << valid.Reason << " She was sent to the waiting room.";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+        girl.AddMessage(ss.str(), image_types::treatments::SENT_TO_WAITING, EVENT_WARNING);
         return IGenericJob::eCheckWorkResult::IMPOSSIBLE;    // not refusing
     }
 
     if (!HasInteraction(DoctorInteractionId)) {
         ss << "${name} does nothing. You don't have any Doctors working. (require 1) ";
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+        girl.AddMessage(ss.str(), image_types::treatments::IMP_NODOC, EVENT_WARNING);
         return IGenericJob::eCheckWorkResult::IMPOSSIBLE;    // not refusing
     }
 
@@ -616,7 +616,7 @@ void CureDiseases::ReceiveTreatment(sGirl& girl, bool is_night) {
     } else {
         ss << "${name} was treated by " << doctor->FullName() << ".";
         doctor->AddMessage("${name} treated " + girl.FullName() + "'s " + diseases[0],
-                           IMGTYPE_NURSE, is_night ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
+                           image_types::work::DOCTOR, is_night ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
         int doc_pts = std::min(5, int(doctor->job_performance(JOB_DOCTOR, false) / 20));
         int nurse_pts = ConsumeResource(CarePointsBasicId, 4) + 2 * ConsumeResource(CarePointsGoodId, 2);
         if(nurse_pts == 0) {

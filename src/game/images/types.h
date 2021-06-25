@@ -107,11 +107,14 @@ namespace image_types {
         constexpr const char* ADVERTISING  = "work:advertising";
         constexpr const char* RECRUITER    = "work:recruiter";
         constexpr const char* CUST_SERVICE = "work:customer-service";
+        constexpr const char* CUST_SERVICE_DONE = "work:customer-service:no-custs";
 
         constexpr const char* STRIPPER    = "work:stripper";
         constexpr const char* MASSEUSE    = "work:masseuse";
         constexpr const char* ESCORT      = "work:escort";
         constexpr const char* WHORE       = "work:whore";
+        constexpr const char* WHORE_ATTACKED = "work:whore:attacked";
+        constexpr const char* WHORE_CUSTREF = "work:whore:customer-refused";
 
         constexpr const char* CITYGUARD    = "work:city-guard";
         constexpr const char* SECURITY     = "work:security";
@@ -136,6 +139,13 @@ namespace image_types {
         constexpr const char* CAT      = "training:cat";
         constexpr const char* SOLO     = "training:solo";
         constexpr const char* FORCED   = "training:forced";
+    }
+
+    namespace treatments {
+        constexpr const char* IMP_AIDS = "treatment:impossible:aids";
+        constexpr const char* IMP_HEALTH = "treatment:impossible:health";
+        constexpr const char* IMP_NODOC = "treatment:impossible:nodoc";
+        constexpr const char* SENT_TO_WAITING = "treatment:waiting-room";
     }
 
     namespace sex {
@@ -254,6 +264,8 @@ namespace image_types {
                 return image_types::sex::BEAST;
             case SKILL_GROUP:
                 return image_types::sex::GROUP_ALL;
+            case SKILL_STRIP:
+                return image_types::sex::STRIP;
         }
     }
 }

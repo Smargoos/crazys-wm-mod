@@ -177,7 +177,7 @@ sWorkJobResult WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
 
             if (rng.percent(iNum)) rival->m_NumGangs--;            // WD:    Destroy rival gang
 
-            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+            girl.AddMessage(ss.str(), image_types::work::WHORE_ATTACKED, EVENT_WARNING);
         }
     }
 
@@ -428,7 +428,7 @@ sWorkJobResult WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
         {
             if (fuckMessage.str().length() > 0)    // if there is a reason, include it in her messages.
             {
-                girl.AddMessage(fuckMessage.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+                girl.AddMessage(fuckMessage.str(), image_types::work::WHORE_CUSTREF, EVENT_WARNING);
             }
             continue;    // otherwise just move on
         }
@@ -676,9 +676,7 @@ sWorkJobResult WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
 
 
         // Match image type to the deed done
-        auto imageType = image_types::sex::ANY;
-        else if (SexType == SKILL_STRIP)        imageType = IMGTYPE_STRIP;
-
+        auto imageType = image_types::skill_to_img(SexType);
 
         // WD:    Save gold earned
         wages += pay;
@@ -698,7 +696,7 @@ sWorkJobResult WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
     else if (NumSleptWith < NumCusts)        { ss << "\n \nShe ran out of customers who like her."; }
     summary += ss.str();
 
-    girl.AddMessage(summary, IMGTYPE_PROFILE, Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
+    girl.AddMessage(summary, image_types::work::WHORE, Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
 
     //gain
     cGirls::PossiblyGainNewTrait(girl, "Good Kisser", 50, actiontype, "${name} has had a lot of practice kissing and as such as become a Good Kisser.", Day0Night1);

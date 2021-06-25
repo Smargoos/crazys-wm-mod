@@ -305,6 +305,6 @@ void sClinic::GirlBeginShift(sGirl& girl, bool is_night) {
     {
         girl.m_DayJob = girl.m_NightJob = JOB_RESTING;
         girl.AddMessage("Health laws prohibit anyone with AIDS from working in the Medical profession so ${name} was sent to the waiting room.",
-                        IMGTYPE_PROFILE, EVENT_WARNING);
+                        image_types::treatments::IMP_AIDS, EVENT_WARNING);
     }
 }

@@ -38,7 +38,7 @@ sWorkJobResult WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
         //SIN - More informative mssg to show *what* she refuses
         //ss << " refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
         ss << "${name} refused to provide Customer Service in your brothel " << (Day0Night1 ? "tonight." : "today.");
-        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), image_types::work::REFUSE, EVENT_NOWORK);
         return {true, 0, 0, 0};
     }
     ss << "${name} worked as Customer Service.\n \n";
@@ -128,8 +128,8 @@ sWorkJobResult WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
         else
         {
             //If there aren't enough customers to take care of, time to quit.
-            girl.AddMessage(girl.FullName() + " ran out of customers to take care of.", IMGTYPE_PROFILE,
-                    Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
+            girl.AddMessage(girl.FullName() + " ran out of customers to take care of.",
+                    image_types::work::CUST_SERVICE_DONE, Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
             break;
         }
     }
@@ -146,7 +146,7 @@ sWorkJobResult WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
     // Now pay the girl.
     // TODO [GOLD] PAYMENT HERE????
     g_Game->gold().staff_wages(50);  // wages come from you
-    girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
+    girl.AddMessage(ss.str(), image_types::work::CUST_SERVICE, Day0Night1 ? EVENT_NIGHTSHIFT : EVENT_DAYSHIFT);
 
     // Raise skills
     int xp = 5 + (serviced / 5), skill = 2 + (serviced / 10);
